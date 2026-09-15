@@ -15,45 +15,60 @@
 
     body {
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #0b0b0f;
-      color: white;
+      background: #09090d;
+      color: #fff;
+      padding: 30px 15px;
+    }
+
+    .container {
+      max-width: 850px;
+      margin: auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    header h1 {
+      color: #7c5cff;
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    header p {
+      color: #999;
+    }
+
+    .scripts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
     }
 
     .card {
-      width: 90%;
-      max-width: 420px;
-      padding: 35px;
-      text-align: center;
       background: #15151c;
       border: 1px solid #292936;
-      border-radius: 18px;
-      box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+      border-radius: 16px;
+      padding: 25px;
     }
 
-    h1 {
-      margin-bottom: 12px;
-      color: #7c5cff;
-    }
-
-    p {
-      color: #aaa;
-      margin-bottom: 25px;
+    .card h2 {
+      margin-bottom: 20px;
+      text-align: center;
     }
 
     .button {
       display: block;
       width: 100%;
-      padding: 14px;
+      padding: 13px;
       border: 0;
-      border-radius: 10px;
+      border-radius: 9px;
       background: #7c5cff;
       color: white;
-      font-size: 16px;
-      font-weight: bold;
+      text-align: center;
       text-decoration: none;
+      font-weight: bold;
       cursor: pointer;
     }
 
@@ -61,40 +76,137 @@
       background: #6848e8;
     }
 
-    .key {
-      margin-top: 20px;
-      padding: 15px;
+    .command {
+      display: none;
+      margin-top: 15px;
+    }
+
+    textarea {
+      width: 100%;
+      height: 100px;
+      resize: none;
+      padding: 12px;
+      border: 1px solid #333;
+      border-radius: 9px;
       background: #0d0d12;
-      border-radius: 10px;
-      word-break: break-all;
       color: #7cffa8;
+      font-size: 12px;
     }
 
     .copy {
-      margin-top: 12px;
+      margin-top: 10px;
       background: #252532;
+    }
+
+    .status {
+      display: none;
+      margin-top: 10px;
+      color: #7cffa8;
+      text-align: center;
+      font-size: 14px;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="card">
+<div class="container">
+
+  <header>
     <h1>🔑 Key System</h1>
+    <p>Escolha seu script e obtenha o comando</p>
+  </header>
 
-    <p id="message">
-      Clique abaixo para obter sua Key.
-    </p>
+  <div class="scripts">
 
-    <!-- TROQUE O LINK ABAIXO PELO SEU LINK DO SHRINKME -->
-    <a
-      class="button"
-      href="https://shrinkme.click/Keynews"
-    >
-      Pegar Key
-    </a>
+    <!-- HERMANOS -->
+    <div class="card">
+      <h2>Hermanos</h2>
+
+      <a
+        class="button"
+        href="https://shrinkme.click/Keynews"
+      >
+        Pegar Key
+      </a>
+
+      <div class="command">
+        <textarea readonly id="hermanos">loadstring(game:HttpGet("https://raw.githubusercontent.com/hermanos-dev/hermanos-hub/refs/heads/main/Loader.lua"))()</textarea>
+
+        <button class="button copy" onclick="copyKey('hermanos', 'status1')">
+          Copiar
+        </button>
+
+        <div class="status" id="status1">
+          ✅ Copiado!
+        </div>
+      </div>
+    </div>
+
+    <!-- TEDDY HUB -->
+    <div class="card">
+      <h2>Teddy Hub</h2>
+
+      <a
+        class="button"
+        href="https://shrinkme.click/Keynews"
+      >
+        Pegar Key
+      </a>
+
+      <div class="command">
+        <textarea readonly id="teddy">loadstring(game:HttpGet("https://raw.githubusercontent.com/teddyhubdev/diepvy/refs/heads/main/TeddyHub.lua"))()</textarea>
+
+        <button class="button copy" onclick="copyKey('teddy', 'status2')">
+          Copiar
+        </button>
+
+        <div class="status" id="status2">
+          ✅ Copiado!
+        </div>
+      </div>
+    </div>
+
+    <!-- TSOU HUB -->
+    <div class="card">
+      <h2>Tsou Hub</h2>
+
+      <a
+        class="button"
+        href="https://shrinkme.click/Keynews"
+      >
+        Pegar Key
+      </a>
+
+      <div class="command">
+        <textarea readonly id="tsou">loadstring(game:HttpGet("https://raw.githubusercontent.com/Tsuo7/TsuoHub/main/bloxfruits"))()</textarea>
+
+        <button class="button copy" onclick="copyKey('tsou', 'status3')">
+          Copiar
+        </button>
+
+        <div class="status" id="status3">
+          ✅ Copiado!
+        </div>
+      </div>
+    </div>
 
   </div>
+</div>
+
+<script>
+  function copyKey(id, statusId) {
+    const text = document.getElementById(id).value;
+
+    navigator.clipboard.writeText(text).then(() => {
+      document.getElementById(statusId).style.display = "block";
+
+      setTimeout(() => {
+        document.getElementById(statusId).style.display = "none";
+      }, 2000);
+    });
+  }
+</script>
 
 </body>
 </html>
