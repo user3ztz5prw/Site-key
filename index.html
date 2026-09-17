@@ -3,107 +3,489 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Key System</title>
 
   <style>
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: Arial, sans-serif;
+      box-sizing: border-box;
+      font-family: Inter, Arial, sans-serif;
+    }
+
+    :root {
+      --purple: #7c5cff;
+      --purple-dark: #5b3fd1;
+      --bg: #07070b;
+      --card: #111118;
+      --border: #282832;
+      --text: #ffffff;
+      --muted: #92929f;
+      --green: #4ade80;
     }
 
     body {
       min-height: 100vh;
-      background: #09090d;
-      color: #fff;
-      padding: 30px 15px;
+      background:
+        radial-gradient(
+          circle at 50% -10%,
+          rgba(124,92,255,.30),
+          transparent 35%
+        ),
+        radial-gradient(
+          circle at 0% 100%,
+          rgba(91,63,209,.18),
+          transparent 30%
+        ),
+        var(--bg);
+
+      color: var(--text);
+      padding: 25px 15px 50px;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+
+      background-image:
+        linear-gradient(
+          rgba(124,92,255,.025) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(124,92,255,.025) 1px,
+          transparent 1px
+        );
+
+      background-size: 40px 40px;
     }
 
     .container {
-      max-width: 850px;
+      position: relative;
+      max-width: 1050px;
       margin: auto;
     }
 
+    /* HEADER */
+
     header {
       text-align: center;
-      margin-bottom: 35px;
+      padding: 30px 15px 45px;
+    }
+
+    .logo {
+      width: 70px;
+      height: 70px;
+
+      margin: 0 auto 20px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 20px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #9277ff,
+          #5c3bd4
+        );
+
+      box-shadow:
+        0 0 35px rgba(124,92,255,.45),
+        inset 0 1px rgba(255,255,255,.3);
+
+      font-size: 31px;
     }
 
     header h1 {
-      color: #7c5cff;
-      font-size: 32px;
-      margin-bottom: 10px;
+      font-size: clamp(32px, 7vw, 48px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+
+      background:
+        linear-gradient(
+          90deg,
+          #fff,
+          #b4a4ff,
+          #7c5cff
+        );
+
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     header p {
-      color: #999;
+      color: var(--muted);
+      margin-top: 12px;
+      font-size: 14px;
     }
+
+    .online {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+
+      margin-top: 18px;
+      padding: 8px 14px;
+
+      border-radius: 30px;
+
+      background: rgba(255,255,255,.035);
+      border: 1px solid var(--border);
+
+      color: #aaa;
+      font-size: 12px;
+    }
+
+    .online span {
+      width: 7px;
+      height: 7px;
+
+      border-radius: 50%;
+
+      background: var(--green);
+
+      box-shadow:
+        0 0 12px var(--green);
+    }
+
+    /* GRID */
 
     .scripts {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 20px;
     }
 
+    /* CARD */
+
     .card {
-      background: #15151c;
-      border: 1px solid #292936;
-      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+
       padding: 25px;
+
+      border-radius: 20px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.055),
+          rgba(255,255,255,.015)
+        );
+
+      border: 1px solid var(--border);
+
+      box-shadow:
+        0 15px 45px rgba(0,0,0,.28),
+        inset 0 1px rgba(255,255,255,.04);
+
+      backdrop-filter: blur(12px);
+
+      transition: .25s ease;
+    }
+
+    .card::before {
+      content: "";
+
+      position: absolute;
+
+      width: 160px;
+      height: 160px;
+
+      top: -100px;
+      right: -80px;
+
+      background: var(--purple);
+
+      filter: blur(70px);
+      opacity: .18;
+
+      pointer-events: none;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+
+      border-color: rgba(124,92,255,.55);
+
+      box-shadow:
+        0 20px 55px rgba(0,0,0,.4),
+        0 0 30px rgba(124,92,255,.08);
+    }
+
+    /* ICON */
+
+    .icon {
+      width: 52px;
+      height: 52px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      margin-bottom: 18px;
+
+      border-radius: 15px;
+
+      background: rgba(124,92,255,.12);
+      border: 1px solid rgba(124,92,255,.25);
+
+      font-size: 23px;
     }
 
     .card h2 {
-      margin-bottom: 20px;
-      text-align: center;
+      font-size: 20px;
+      margin-bottom: 8px;
     }
 
+    .description {
+      color: #858593;
+      font-size: 13px;
+      line-height: 1.5;
+
+      margin-bottom: 20px;
+    }
+
+    /* BUTTON */
+
     .button {
-      display: block;
       width: 100%;
-      padding: 13px;
-      border: 0;
-      border-radius: 9px;
-      background: #7c5cff;
+      min-height: 46px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+
+      border: none;
+      border-radius: 11px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #8062ff,
+          #6039df
+        );
+
       color: white;
-      text-align: center;
+
       text-decoration: none;
-      font-weight: bold;
+
+      font-size: 14px;
+      font-weight: 700;
+
       cursor: pointer;
+
+      box-shadow:
+        0 8px 20px rgba(100,60,220,.22);
+
+      transition: .2s ease;
     }
 
     .button:hover {
-      background: #6848e8;
+      transform: translateY(-2px);
+      filter: brightness(1.1);
+
+      box-shadow:
+        0 10px 28px rgba(100,60,220,.35);
     }
+
+    .button:active {
+      transform: scale(.98);
+    }
+
+    /* VERIFICATION */
+
+    .verification {
+      display: none;
+
+      margin-top: 15px;
+      padding: 15px;
+
+      border-radius: 13px;
+
+      background: rgba(124,92,255,.055);
+
+      border: 1px solid rgba(124,92,255,.15);
+
+      animation: appear .3s ease;
+    }
+
+    .verification p {
+      color: #aaa;
+
+      font-size: 12px;
+      line-height: 1.5;
+
+      text-align: center;
+
+      margin-bottom: 12px;
+    }
+
+    .verify {
+      background: #242430;
+      box-shadow: none;
+    }
+
+    .verify:hover {
+      background: #30303e;
+    }
+
+    /* COMMAND */
 
     .command {
       display: none;
+
       margin-top: 15px;
+
+      animation: appear .3s ease;
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     textarea {
       width: 100%;
-      height: 100px;
+      height: 105px;
+
+      padding: 13px;
+
       resize: none;
-      padding: 12px;
-      border: 1px solid #333;
-      border-radius: 9px;
-      background: #0d0d12;
-      color: #7cffa8;
-      font-size: 12px;
+
+      border-radius: 11px;
+
+      border: 1px solid #30303c;
+
+      background: #08080d;
+
+      color: #a7f3c0;
+
+      font-family: monospace;
+      font-size: 11px;
+      line-height: 1.5;
+
+      outline: none;
+    }
+
+    textarea:focus {
+      border-color: var(--purple);
     }
 
     .copy {
       margin-top: 10px;
-      background: #252532;
+
+      background: #1c1c26;
+
+      box-shadow: none;
+    }
+
+    .copy:hover {
+      background: #292936;
     }
 
     .status {
       display: none;
+
       margin-top: 10px;
-      color: #7cffa8;
+      padding: 9px;
+
+      border-radius: 9px;
+
+      background: rgba(74,222,128,.08);
+
+      border: 1px solid rgba(74,222,128,.15);
+
+      color: var(--green);
+
       text-align: center;
-      font-size: 14px;
+
+      font-size: 12px;
+    }
+
+    /* UNLOCKED */
+
+    .unlocked {
+      display: none;
+
+      margin-top: 10px;
+
+      padding: 8px;
+
+      border-radius: 8px;
+
+      background: rgba(74,222,128,.06);
+
+      color: var(--green);
+
+      text-align: center;
+
+      font-size: 11px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      margin-top: 45px;
+
+      text-align: center;
+
+      color: #555563;
+
+      font-size: 12px;
+    }
+
+    footer strong {
+      color: #777;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 800px) {
+
+      .scripts {
+        grid-template-columns: 1fr;
+
+        max-width: 500px;
+
+        margin: auto;
+      }
+
+      header {
+        padding-top: 15px;
+      }
+
+      .card {
+        padding: 22px;
+      }
+    }
+
+    @media (max-width: 400px) {
+
+      body {
+        padding-left: 12px;
+        padding-right: 12px;
+      }
+
+      header h1 {
+        font-size: 31px;
+      }
     }
   </style>
 </head>
@@ -113,100 +495,404 @@
 <div class="container">
 
   <header>
-    <h1>🔑 Key System</h1>
-    <p>Escolha seu script e obtenha o comando</p>
+
+    <div class="logo">
+      🔑
+    </div>
+
+    <h1>Key System</h1>
+
+    <p>
+      Complete a short step to unlock your content
+    </p>
+
+    <div class="online">
+      <span></span>
+      Sistema online
+    </div>
+
   </header>
+
 
   <div class="scripts">
 
+
     <!-- HERMANOS -->
+
     <div class="card">
+
+      <div class="icon">
+        ⚡
+      </div>
+
       <h2>Hermanos</h2>
 
+      <p class="description">
+        Complete the verification to unlock the Hermanos content.
+      </p>
+
       <a
         class="button"
-        href="https://shrinkme.click/Keynews"
+        href="https://link-hub.net/9453519/SJLbJMdtJ6ER"
+        target="_blank"
+        onclick="startVerification('hermanos')"
       >
-        Pegar Key
+        🔑 Pegar Key
       </a>
 
-      <div class="command">
-        <textarea readonly id="hermanos">loadstring(game:HttpGet("https://raw.githubusercontent.com/hermanos-dev/hermanos-hub/refs/heads/main/Loader.lua"))()</textarea>
+      <div
+        class="verification"
+        id="verify-hermanos"
+      >
 
-        <button class="button copy" onclick="copyKey('hermanos', 'status1')">
-          Copiar
+        <p>
+          Depois de concluir o Linkvertise, volte para esta página.
+        </p>
+
+        <button
+          class="button verify"
+          onclick="unlock('hermanos')"
+        >
+          ✓ Já completei, liberar
         </button>
 
-        <div class="status" id="status1">
-          ✅ Copiado!
-        </div>
       </div>
+
+      <div
+        class="unlocked"
+        id="unlocked-hermanos"
+      >
+        ✓ Conteúdo liberado
+      </div>
+
+      <div
+        class="command"
+        id="command-hermanos"
+      >
+
+        <textarea
+          readonly
+          id="hermanos"
+        >loadstring(game:HttpGet("https://raw.githubusercontent.com/hermanos-dev/hermanos-hub/refs/heads/main/Loader.lua"))()</textarea>
+
+        <button
+          class="button copy"
+          onclick="copyKey('hermanos', 'status1')"
+        >
+          📋 Copiar
+        </button>
+
+        <div
+          class="status"
+          id="status1"
+        >
+          ✓ Copiado com sucesso!
+        </div>
+
+      </div>
+
     </div>
+
 
     <!-- TEDDY HUB -->
+
     <div class="card">
+
+      <div class="icon">
+        🐻
+      </div>
+
       <h2>Teddy Hub</h2>
 
+      <p class="description">
+        Complete the verification to unlock the Teddy Hub content.
+      </p>
+
       <a
         class="button"
-        href="https://shrinkme.click/Keynews"
+        href="https://link-hub.net/9453519/SJLbJMdtJ6ER"
+        target="_blank"
+        onclick="startVerification('teddy')"
       >
-        Pegar Key
+        🔑 Pegar Key
       </a>
 
-      <div class="command">
-        <textarea readonly id="teddy">loadstring(game:HttpGet("https://raw.githubusercontent.com/teddyhubdev/diepvy/refs/heads/main/TeddyHub.lua"))()</textarea>
+      <div
+        class="verification"
+        id="verify-teddy"
+      >
 
-        <button class="button copy" onclick="copyKey('teddy', 'status2')">
-          Copiar
+        <p>
+          Depois de concluir o Linkvertise, volte para esta página.
+        </p>
+
+        <button
+          class="button verify"
+          onclick="unlock('teddy')"
+        >
+          ✓ Já completei, liberar
         </button>
 
-        <div class="status" id="status2">
-          ✅ Copiado!
-        </div>
       </div>
+
+      <div
+        class="unlocked"
+        id="unlocked-teddy"
+      >
+        ✓ Conteúdo liberado
+      </div>
+
+      <div
+        class="command"
+        id="command-teddy"
+      >
+
+        <textarea
+          readonly
+          id="teddy"
+        >loadstring(game:HttpGet("https://raw.githubusercontent.com/teddyhubdev/diepvy/refs/heads/main/TeddyHub.lua"))()</textarea>
+
+        <button
+          class="button copy"
+          onclick="copyKey('teddy', 'status2')"
+        >
+          📋 Copiar
+        </button>
+
+        <div
+          class="status"
+          id="status2"
+        >
+          ✓ Copiado com sucesso!
+        </div>
+
+      </div>
+
     </div>
 
+
     <!-- TSOU HUB -->
+
     <div class="card">
+
+      <div class="icon">
+        ✦
+      </div>
+
       <h2>Tsou Hub</h2>
+
+      <p class="description">
+        Complete the verification to unlock the Tsou Hub content.
+      </p>
 
       <a
         class="button"
-        href="https://shrinkme.click/Keynews"
+        href="https://link-hub.net/9453519/SJLbJMdtJ6ER"
+        target="_blank"
+        onclick="startVerification('tsou')"
       >
-        Pegar Key
+        🔑 Pegar Key
       </a>
 
-      <div class="command">
-        <textarea readonly id="tsou">loadstring(game:HttpGet("https://raw.githubusercontent.com/Tsuo7/TsuoHub/main/bloxfruits"))()</textarea>
+      <div
+        class="verification"
+        id="verify-tsou"
+      >
 
-        <button class="button copy" onclick="copyKey('tsou', 'status3')">
-          Copiar
+        <p>
+          Depois de concluir o Linkvertise, volte para esta página.
+        </p>
+
+        <button
+          class="button verify"
+          onclick="unlock('tsou')"
+        >
+          ✓ Já completei, liberar
         </button>
 
-        <div class="status" id="status3">
-          ✅ Copiado!
-        </div>
       </div>
+
+      <div
+        class="unlocked"
+        id="unlocked-tsou"
+      >
+        ✓ Conteúdo liberado
+      </div>
+
+      <div
+        class="command"
+        id="command-tsou"
+      >
+
+        <textarea
+          readonly
+          id="tsou"
+        >loadstring(game:HttpGet("https://raw.githubusercontent.com/Tsuo7/TsuoHub/main/bloxfruits"))()</textarea>
+
+        <button
+          class="button copy"
+          onclick="copyKey('tsou', 'status3')"
+        >
+          📋 Copiar
+        </button>
+
+        <div
+          class="status"
+          id="status3"
+        >
+          ✓ Copiado com sucesso!
+        </div>
+
+      </div>
+
     </div>
 
   </div>
+
+
+  <footer>
+    <strong>Key System</strong> • Secure access system
+  </footer>
+
 </div>
 
+
 <script>
-  function copyKey(id, statusId) {
-    const text = document.getElementById(id).value;
 
-    navigator.clipboard.writeText(text).then(() => {
-      document.getElementById(statusId).style.display = "block";
+  /*
+    Abre o Linkvertise e mostra o botão
+    "Já completei, liberar".
+  */
 
-      setTimeout(() => {
-        document.getElementById(statusId).style.display = "none";
-      }, 2000);
-    });
+  function startVerification(id) {
+
+    localStorage.setItem(
+      "verification_" + id,
+      "waiting"
+    );
+
+    document.getElementById(
+      "verify-" + id
+    ).style.display = "block";
   }
+
+
+  /*
+    Libera o conteúdo.
+  */
+
+  function unlock(id) {
+
+    localStorage.setItem(
+      "verification_" + id,
+      "unlocked"
+    );
+
+    document.getElementById(
+      "verify-" + id
+    ).style.display = "none";
+
+    document.getElementById(
+      "unlocked-" + id
+    ).style.display = "block";
+
+    document.getElementById(
+      "command-" + id
+    ).style.display = "block";
+  }
+
+
+  /*
+    Verifica se algum conteúdo
+    já foi liberado anteriormente.
+  */
+
+  window.addEventListener("load", function() {
+
+    const ids = [
+      "hermanos",
+      "teddy",
+      "tsou"
+    ];
+
+    ids.forEach(function(id) {
+
+      const state = localStorage.getItem(
+        "verification_" + id
+      );
+
+      if (state === "waiting") {
+
+        document.getElementById(
+          "verify-" + id
+        ).style.display = "block";
+
+      }
+
+      if (state === "unlocked") {
+
+        document.getElementById(
+          "unlocked-" + id
+        ).style.display = "block";
+
+        document.getElementById(
+          "command-" + id
+        ).style.display = "block";
+      }
+
+    });
+
+  });
+
+
+  /*
+    Copiar conteúdo.
+  */
+
+  function copyKey(id, statusId) {
+
+    const text =
+      document.getElementById(id).value;
+
+    navigator.clipboard
+      .writeText(text)
+      .then(function() {
+
+        showCopied(statusId);
+
+      })
+      .catch(function() {
+
+        const textarea =
+          document.getElementById(id);
+
+        textarea.select();
+
+        document.execCommand("copy");
+
+        showCopied(statusId);
+
+      });
+
+  }
+
+
+  function showCopied(statusId) {
+
+    const status =
+      document.getElementById(statusId);
+
+    status.style.display = "block";
+
+    setTimeout(function() {
+
+      status.style.display = "none";
+
+    }, 2500);
+
+  }
+
 </script>
 
 </body>
-</html>
+  </html>
